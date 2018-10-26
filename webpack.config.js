@@ -1,17 +1,4 @@
-// const path = require('path');
-
-// const webpack = require('webpack');
-// const _ = require('lodash');
-// const ExtractTextPlugin = require('extract-text-webpack-plugin');
-// const CleanWebpackPlugin = require('clean-webpack-plugin');
-// const NodemonPlugin = require('nodemon-webpack-plugin');
-// const nodeExternals = require('webpack-node-externals');
-// const CopyWebpackPlugin = require('copy-webpack-plugin');
-// const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
-// const ProgressBarPlugin = require('progress-bar-webpack-plugin');
-// const ExtractTextPlugin = require('extract-text-webpack-plugin');
-// const MiniCssExtractPlugin = require('mini-css-extract-plugin');
-// const postcssNested = require('postcss-nested');
+const RemoveStrictPlugin = require( 'remove-strict-webpack-plugin' );
 
 
 // const distPath = PUBLISH ? 'dist' : 'dist-developement';
@@ -79,7 +66,9 @@ const server = {
             },
         ] // rules
     }, // modules
-    // plugins: clientPlugins,
+    plugins: [
+        new RemoveStrictPlugin()
+    ],
     devtool: false
 };
 
