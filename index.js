@@ -22,6 +22,8 @@ _module = ZWayConsole;
  	//this.modulesGraph = {};
 
  	this.fsRoot = 'modules/ZWayConsole/';
+ 	this.name = 'ZWayConsole';
+ 	this.console = console;
 
  	//this.log('start');
 
@@ -42,16 +44,33 @@ _module = ZWayConsole;
 
  	var moduleStr = fs.load(this.fsRoot + 'module.js');
  	moduleStr = decodeURIComponent(escape(moduleStr));
+ 	
+ 	
+ 	var globals = {
+ 		fsRoot: this.fsRoot
+ 	}
+ 	
+ 	var console = {
+ 		log: this.log.bind(this, 'log'),
+ 		warn: this.log.bind(this, 'warn'),
+ 		error: this.log.bind(this, 'error')
+ 	}
+ 	
  	var exports = {};
  	eval(moduleStr);
  	this.module = exports;
  	
- 	// }
- 	// catch (err) {
- 	// 	this.log('start Error: ' + err.toString() + '\n' + err.stack);
- 	// 	return;
- 	// }
  };
+ 
+ZWayConsole.prototype.log = function log(method, data) {
+	if (!data) {
+ 		console[method].call(this, this.name + ' ' + data)
+ 		return;
+ 	}
+ 	data.split('\n').forEach(function(line) {
+ 		console[method].call(this, this.name + ' ' + line);
+ 	})
+}
 
 
  ZWayConsole.prototype.stop = function stop() {
