@@ -42,7 +42,9 @@ _module = ZWayConsole;
 
  	var moduleStr = fs.load(this.fsRoot + 'module.js');
  	moduleStr = decodeURIComponent(escape(moduleStr));
- 	this.module = eval(moduleStr);
+ 	var exports = {};
+ 	eval(moduleStr);
+ 	this.module = exports;
  	
  	// }
  	// catch (err) {
