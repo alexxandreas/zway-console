@@ -1,0 +1,22 @@
+{
+  "name": "zway-console",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/alexxandreas/zway-console.git"
+  },
+  "author": "Alexxandreas",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/alexxandreas/zway-console/issues"
+  },
+  "homepage": "https://github.com/alexxandreas/zway-console#readme",
+  "dependencies": {
+    "webpack": "^4.23.1"
+  }
+}
