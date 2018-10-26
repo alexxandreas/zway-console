@@ -14,5 +14,6 @@ const stop = () => {
     stopServer();
 }
 
-start();
+setTimeout(start, 1);
+
 export default { stop };

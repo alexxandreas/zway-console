@@ -4686,7 +4686,7 @@ var stop = function stop() {
   Object(_webServer__WEBPACK_IMPORTED_MODULE_1__["stopServer"])();
 };
 
-start();
+setTimeout(start, 1);
 /* harmony default export */ __webpack_exports__["default"] = ({
   stop: stop
 });
