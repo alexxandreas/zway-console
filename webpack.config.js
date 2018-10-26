@@ -45,7 +45,8 @@ const server = {
     },
     output: {
         path: `${__dirname}`,
-        filename: 'module.js'
+        filename: 'module.js',
+        libraryTarget: 'commonjs'
     },
     resolve: {
         extensions: ['.js', '.jsx'],

@@ -1,4 +1,4 @@
-/******/ (function(modules) { // webpackBootstrap
+(function(e, a) { for(var i in a) e[i] = a[i]; }(exports, /******/ (function(modules) { // webpackBootstrap
 /******/ 	// The module cache
 /******/ 	var installedModules = {};
 /******/
@@ -4659,7 +4659,7 @@ module.exports = function (module) {
 /*!**********************!*\
   !*** ./src/index.js ***!
   \**********************/
-/*! no exports provided */
+/*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -4668,27 +4668,37 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var lodash_map__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(lodash_map__WEBPACK_IMPORTED_MODULE_0__);
 
 
-(function () {
-  var start = function start() {
-    console.log('ZWayConsole module.js start');
+// (function() {
+//     const start = () => {
+//         console.log('ZWayConsole module.js start');
+//         const a = _.map([1,2], val => val+1);
+//         console.log(`ZWayConsole module.js ${a.join(',')}`);
+//     }
+//     const stop = () => {
+//         console.log('ZWayConsole module.js stop');
+//     }
+//     start();
+//     return { stop };
+// })();
+var start = function start() {
+  console.log('ZWayConsole module.js start');
 
-    var a = lodash_map__WEBPACK_IMPORTED_MODULE_0___default()([1, 2], function (val) {
-      return val + 1;
-    });
+  var a = lodash_map__WEBPACK_IMPORTED_MODULE_0___default()([1, 2], function (val) {
+    return val + 1;
+  });
 
-    console.log("ZWayConsole module.js ".concat(a.join(',')));
-  };
+  console.log("ZWayConsole module.js ".concat(a.join(',')));
+};
 
-  var stop = function stop() {
-    console.log('ZWayConsole module.js stop');
-  };
+var stop = function stop() {
+  console.log('ZWayConsole module.js stop');
+};
 
-  start();
-  return {
-    stop: stop
-  };
-})();
+start();
+/* harmony default export */ __webpack_exports__["default"] = ({
+  stop: stop
+});
 
 /***/ })
 
-/******/ });
+/******/ })));

@@ -55,8 +55,8 @@ _module = ZWayConsole;
  ZWayConsole.prototype.stop = function stop() {
  	console.log('ZWayConsole stop');
  	// this.log('stop');
- 	if (this.module && (typeof this.module.stop === 'function')) {
- 		this.module.stop();
+ 	if (this.module && this.module.default && (typeof this.module.default.stop === 'function')) {
+ 		this.module.default.stop();
  	}
 
  	// //this.unloadModules();
