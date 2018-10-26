@@ -1,7 +1,7 @@
  /* global zwayconsole, ws, controller */
  
  export const startServer = () => {
-    zwayconsole = (function(url, request) {
+    zwayconsole = function(url, request) {
         console.log('ZWayConsole request: ' + url);
         
     // 	var i = this.routes.length;
@@ -21,7 +21,7 @@
             },
             body: {data: 'data'}
         }
-    }).bind(this);
+    };
     
     ws.allowExternalAccess("zwayconsole", controller.auth.ROLE.ANONYMOUS); // login required
  }	
