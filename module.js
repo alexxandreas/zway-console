@@ -4666,6 +4666,8 @@ module.exports = function (module) {
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var lodash_map__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! lodash/map */ "./node_modules/lodash/map.js");
 /* harmony import */ var lodash_map__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(lodash_map__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _webServer__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./webServer */ "./src/webServer.js");
+
 
 
 var start = function start() {
@@ -4676,16 +4678,64 @@ var start = function start() {
   });
 
   console.log("ZWayConsole module.js ".concat(a.join(',')));
+  Object(_webServer__WEBPACK_IMPORTED_MODULE_1__["startServer"])();
 };
 
 var stop = function stop() {
   console.log('ZWayConsole module.js stop');
+  Object(_webServer__WEBPACK_IMPORTED_MODULE_1__["stopServer"])();
 };
 
 start();
 /* harmony default export */ __webpack_exports__["default"] = ({
   stop: stop
 });
+
+/***/ }),
+
+/***/ "./src/webServer.js":
+/*!**************************!*\
+  !*** ./src/webServer.js ***!
+  \**************************/
+/*! exports provided: startServer, stopServer */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "startServer", function() { return startServer; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "stopServer", function() { return stopServer; });
+var _this = undefined;
+
+/* global ZWayConsole, ws, controller */
+var startServer = function startServer() {
+  ZWayConsole = function (url, request) {
+    console.log('ZWayConsole request: ' + url); // 	var i = this.routes.length;
+    //     while( i-- ){
+    //       var args = url.match(this.routes[i].pattern);
+    //       if( args ){
+    //             return this.routes[i].callback(args.slice(1));
+    //       }
+    //     }
+    // 	this.log('request: ' + url +' route not found');
+
+    return {
+      status: 200,
+      headers: {
+        "Content-Type": 'application/json',
+        "Connection": "keep-alive"
+      },
+      body: {
+        data: 'data'
+      }
+    };
+  }.bind(_this);
+
+  ws.allowExternalAccess("ZWayConsole", controller.auth.ROLE.ANONYMOUS); // login required
+};
+var stopServer = function stopServer() {
+  ws.revokeExternalAccess("ZWayConsole");
+  ZWayConsole = null;
+};
 
 /***/ })
 
