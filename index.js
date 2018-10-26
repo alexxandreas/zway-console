@@ -1,12 +1,12 @@
 /*** ZWayConsole module ********************************************************/
-/* global inherits ZWave AutomationModule _module fs*/
+/* global inherits AutomationModule _module fs*/
 function ZWayConsole(id, controller) {
 	ZWayConsole.super_.call(this, id, controller);
 }
 
-inherits(ZWave, AutomationModule);
+inherits(ZWayConsole, AutomationModule);
 
-_module = ZWave;
+_module = ZWayConsole;
 
 
 
