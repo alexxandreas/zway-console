@@ -4706,7 +4706,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "stopServer", function() { return stopServer; });
 /* global zwayconsole, ws, controller */
 var startServer = function startServer() {
-  zwayconsole = function zwayconsole(url, request) {
+  zwayconsole = function listen(url, request) {
     console.log('ZWayConsole request: ' + url); // 	var i = this.routes.length;
     //     while( i-- ){
     //       var args = url.match(this.routes[i].pattern);
