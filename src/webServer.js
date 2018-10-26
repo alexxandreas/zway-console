@@ -648,11 +648,12 @@ const rootHandler = () => sendFile('htdocs/index.html');
     	
 const initRoutes = () => {
     // index
+    addRoute('', rootHandler);
     addRoute('/', rootHandler);
     addRoute('/index.html', rootHandler);
 }
  export const startServer = () => {
-    zwayconsole = function listen(url, request) {
+    global.zwayconsole = function listen(url, request) {
         // console.log('ZWayConsole request: ' + url);
         
         let result = { status: 404 };
@@ -675,5 +676,5 @@ const initRoutes = () => {
  
  export const stopServer = () => {
     ws.revokeExternalAccess("zwayconsole");
-    zwayconsole = null;
+    global.zwayconsole = null;
  }

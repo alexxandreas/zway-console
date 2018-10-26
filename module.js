@@ -4877,7 +4877,7 @@ setTimeout(start, 1);
 
 ;
 __webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "startServer", function() { return startServer; });
+/* WEBPACK VAR INJECTION */(function(global) {/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "startServer", function() { return startServer; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "stopServer", function() { return stopServer; });
 /* harmony import */ var lodash_forEachRight__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! lodash/forEachRight */ "./node_modules/lodash/forEachRight.js");
 /* harmony import */ var lodash_forEachRight__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(lodash_forEachRight__WEBPACK_IMPORTED_MODULE_0__);
@@ -5526,12 +5526,13 @@ var rootHandler = function rootHandler() {
 
 var initRoutes = function initRoutes() {
   // index
+  addRoute('', rootHandler);
   addRoute('/', rootHandler);
   addRoute('/index.html', rootHandler);
 };
 
 var startServer = function startServer() {
-  zwayconsole = function listen(url, request) {
+  global.zwayconsole = function listen(url, request) {
     // console.log('ZWayConsole request: ' + url);
     var result = {
       status: 404
@@ -5555,8 +5556,9 @@ var startServer = function startServer() {
 };
 var stopServer = function stopServer() {
   ws.revokeExternalAccess("zwayconsole");
-  zwayconsole = null;
+  global.zwayconsole = null;
 };
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./../node_modules/webpack/buildin/global.js */ "./node_modules/webpack/buildin/global.js")))
 
 /***/ })
 
