@@ -1,7 +1,7 @@
- /* global ZWayConsole, ws, controller */
+ /* global zwayconsole, ws, controller */
  
  export const startServer = () => {
-    ZWayConsole = (function(url, request) {
+    zwayconsole = (function(url, request) {
         console.log('ZWayConsole request: ' + url);
         
     // 	var i = this.routes.length;
@@ -23,10 +23,10 @@
         }
     }).bind(this);
     
-    ws.allowExternalAccess("ZWayConsole", controller.auth.ROLE.ANONYMOUS); // login required
+    ws.allowExternalAccess("zwayconsole", controller.auth.ROLE.ANONYMOUS); // login required
  }	
  
  export const stopServer = () => {
-    ws.revokeExternalAccess("ZWayConsole");
-    ZWayConsole = null;
+    ws.revokeExternalAccess("zwayconsole");
+    zwayconsole = null;
  }

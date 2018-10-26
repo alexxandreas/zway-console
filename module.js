@@ -4706,9 +4706,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "stopServer", function() { return stopServer; });
 var _this = undefined;
 
-/* global ZWayConsole, ws, controller */
+/* global zwayconsole, ws, controller */
 var startServer = function startServer() {
-  ZWayConsole = function (url, request) {
+  zwayconsole = function (url, request) {
     console.log('ZWayConsole request: ' + url); // 	var i = this.routes.length;
     //     while( i-- ){
     //       var args = url.match(this.routes[i].pattern);
@@ -4730,11 +4730,11 @@ var startServer = function startServer() {
     };
   }.bind(_this);
 
-  ws.allowExternalAccess("ZWayConsole", controller.auth.ROLE.ANONYMOUS); // login required
+  ws.allowExternalAccess("zwayconsole", controller.auth.ROLE.ANONYMOUS); // login required
 };
 var stopServer = function stopServer() {
-  ws.revokeExternalAccess("ZWayConsole");
-  ZWayConsole = null;
+  ws.revokeExternalAccess("zwayconsole");
+  zwayconsole = null;
 };
 
 /***/ })
