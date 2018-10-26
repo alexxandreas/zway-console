@@ -95,11 +95,11 @@
 
 (function () {
   function start() {
-    console.log('ZWayConsole index.js start');
+    console.log('ZWayConsole module.js start');
   }
 
   function stop() {
-    console.log('ZWayConsole index.js stop');
+    console.log('ZWayConsole module.js stop');
   }
 
   start();
