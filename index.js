@@ -40,7 +40,7 @@ _module = ZWayConsole;
  	// 	//var module;
  	// 	//var config = moduleObj.config;
 
- 	var moduleStr = fs.load(this.fsRoot + 'src/index.js');
+ 	var moduleStr = fs.load(this.fsRoot + 'module.js');
  	moduleStr = decodeURIComponent(escape(moduleStr));
  	this.module = eval(moduleStr);
  	
