@@ -40,9 +40,10 @@ _module = ZWayConsole;
  	// 	//var module;
  	// 	//var config = moduleObj.config;
 
- 	var moduleStr = fs.load(this.fsRoot + 'test.js');
+ 	var moduleStr = fs.load(this.fsRoot + 'src/index.js');
  	moduleStr = decodeURIComponent(escape(moduleStr));
- 	eval(moduleStr);
+ 	this.module = eval(moduleStr);
+ 	
  	// }
  	// catch (err) {
  	// 	this.log('start Error: ' + err.toString() + '\n' + err.stack);
@@ -54,6 +55,9 @@ _module = ZWayConsole;
  ZWayConsole.prototype.stop = function stop() {
  	console.log('ZWayConsole stop');
  	// this.log('stop');
+ 	if (this.module && (typeof this.module.stop === 'function')) {
+ 		this.module.stop();
+ 	}
 
  	// //this.unloadModules();
  	// this.ModuleLoader && this.ModuleLoader.stop();
