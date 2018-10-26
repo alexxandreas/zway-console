@@ -71,6 +71,7 @@ const server = {
                 use: [{
                     loader: 'babel-loader',
                     options: {
+                        plugins: ['lodash'],
                         presets: ['@babel/preset-env']
                     }
                 }]
