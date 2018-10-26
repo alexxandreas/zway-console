@@ -14,7 +14,7 @@
 	},
 	"defaults": {
 		"title": "Отладочная консоль",
-	    "description": "Отладочная консоль"
+	    "description": "<a href=\"/ZAutomation/api/v1/load/modulemedia/ZWayConsole/icon.png\" target=\"_blank\">Отладочная консоль</a>"
 	},
 	"schema": {
 	},
