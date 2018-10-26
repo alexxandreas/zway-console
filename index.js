@@ -35,7 +35,13 @@ _module = ZWayConsole;
  };
 
  ZWayConsole.prototype.start = function start() {
- 	console.log('ZWayConsole start');
+ 	var console = {
+ 		log: this.log.bind(this, 'log'),
+ 		warn: this.log.bind(this, 'warn'),
+ 		error: this.log.bind(this, 'error')
+ 	}
+ 	
+ 	console.log('start');
  	// this.log('start');
  	// try {
  	// 	var MHA = this;
@@ -50,11 +56,7 @@ _module = ZWayConsole;
  		fsRoot: this.fsRoot
  	}
  	
- 	var console = {
- 		log: this.log.bind(this, 'log'),
- 		warn: this.log.bind(this, 'warn'),
- 		error: this.log.bind(this, 'error')
- 	}
+ 
  	
  	var exports = {};
  	eval(moduleStr);
