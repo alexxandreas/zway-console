@@ -2,7 +2,7 @@
 	"dependencies": [],
 	"singleton": true,
 	"category": "developers_stuff",
-	"author": "Alexxandreas"
+	"author": "Alexxandreas",
 	"homepage": "http://razberry.z-wave.me",
 	"icon": "icon.png",
 	"moduleName":"ZWayConsole",
