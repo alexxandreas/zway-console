@@ -86,6 +86,76 @@
 /************************************************************************/
 /******/ ({
 
+/***/ "./node_modules/auto-bind/index.js":
+/*!*****************************************!*\
+  !*** ./node_modules/auto-bind/index.js ***!
+  \*****************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+;
+
+
+module.exports = function (self, options) {
+  options = Object.assign({}, options);
+
+  var filter = function filter(key) {
+    var match = function match(pattern) {
+      return typeof pattern === 'string' ? key === pattern : pattern.test(key);
+    };
+
+    if (options.include) {
+      return options.include.some(match);
+    }
+
+    if (options.exclude) {
+      return !options.exclude.some(match);
+    }
+
+    return true;
+  };
+
+  var _iteratorNormalCompletion = true;
+  var _didIteratorError = false;
+  var _iteratorError = undefined;
+
+  try {
+    for (var _iterator = Object.getOwnPropertyNames(self.constructor.prototype)[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+      var key = _step.value;
+      var val = self[key];
+
+      if (key !== 'constructor' && typeof val === 'function' && filter(key)) {
+        self[key] = val.bind(self);
+      }
+    }
+  } catch (err) {
+    _didIteratorError = true;
+    _iteratorError = err;
+  } finally {
+    try {
+      if (!_iteratorNormalCompletion && _iterator.return != null) {
+        _iterator.return();
+      }
+    } finally {
+      if (_didIteratorError) {
+        throw _iteratorError;
+      }
+    }
+  }
+
+  return self;
+};
+
+var excludedReactMethods = ['componentWillMount', 'UNSAFE_componentWillMount', 'render', 'getSnapshotBeforeUpdate', 'componentDidMount', 'componentWillReceiveProps', 'UNSAFE_componentWillReceiveProps', 'shouldComponentUpdate', 'componentWillUpdate', 'UNSAFE_componentWillUpdate', 'componentDidUpdate', 'componentWillUnmount', 'componentDidCatch', 'setState', 'forceUpdate'];
+
+module.exports.react = function (self, options) {
+  options = Object.assign({}, options);
+  options.exclude = (options.exclude || []).concat(excludedReactMethods);
+  return module.exports(self, options);
+};
+
+/***/ }),
+
 /***/ "./node_modules/lodash/_DataView.js":
 /*!******************************************!*\
   !*** ./node_modules/lodash/_DataView.js ***!
@@ -4830,66 +4900,38 @@ module.exports = function (module) {
 
 /***/ }),
 
-/***/ "./src/index.js":
-/*!**********************!*\
-  !*** ./src/index.js ***!
-  \**********************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-;
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var lodash_map__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! lodash/map */ "./node_modules/lodash/map.js");
-/* harmony import */ var lodash_map__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(lodash_map__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _webServer__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./webServer */ "./src/webServer.js");
-
-
-
-var start = function start() {
-  console.log('ZWayConsole module.js start');
-
-  var a = lodash_map__WEBPACK_IMPORTED_MODULE_0___default()([1, 2], function (val) {
-    return val + 1;
-  });
-
-  console.log("ZWayConsole module.js ".concat(a.join(',')));
-  Object(_webServer__WEBPACK_IMPORTED_MODULE_1__["startServer"])();
-};
-
-var stop = function stop() {
-  console.log('ZWayConsole module.js stop');
-  Object(_webServer__WEBPACK_IMPORTED_MODULE_1__["stopServer"])();
-};
-
-setTimeout(start, 1);
-/* harmony default export */ __webpack_exports__["default"] = ({
-  stop: stop
-});
-
-/***/ }),
-
-/***/ "./src/webServer.js":
+/***/ "./src/WebServer.js":
 /*!**************************!*\
-  !*** ./src/webServer.js ***!
+  !*** ./src/WebServer.js ***!
   \**************************/
-/*! exports provided: startServer, stopServer */
+/*! exports provided: sendError, sendJSON, sendFile, default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 ;
 __webpack_require__.r(__webpack_exports__);
-/* WEBPACK VAR INJECTION */(function(global) {/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "startServer", function() { return startServer; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "stopServer", function() { return stopServer; });
+/* WEBPACK VAR INJECTION */(function(global) {/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "sendError", function() { return sendError; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "sendJSON", function() { return sendJSON; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "sendFile", function() { return sendFile; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return WebServer; });
 /* harmony import */ var lodash_forEachRight__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! lodash/forEachRight */ "./node_modules/lodash/forEachRight.js");
 /* harmony import */ var lodash_forEachRight__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(lodash_forEachRight__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var auto_bind__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! auto-bind */ "./node_modules/auto-bind/index.js");
+/* harmony import */ var auto_bind__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(auto_bind__WEBPACK_IMPORTED_MODULE_1__);
 
 
 var _mimeTypes;
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
 
 function _readOnlyError(name) { throw new Error("\"" + name + "\" is read-only"); }
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
-var routes = [];
+
 var mimeTypes = (_mimeTypes = {
   "ez": "application/andrew-inset",
   "aw": "application/applixware",
@@ -5474,7 +5516,6 @@ var sendError = function sendError(status, body) {
     body: body
   };
 };
-
 var sendJSON = function sendJSON(data) {
   return {
     status: 200,
@@ -5485,13 +5526,15 @@ var sendJSON = function sendJSON(data) {
     body: data
   };
 };
+/**
+ * Отправляет файл. Путь - от automation, т.е. 'modules/ModuleName/htdocs/...'
+ */
 
 var sendFile = function sendFile(path) {
-  var root = globals.fsRoot; //  'modules/MyHomeAutomation/';
-
+  //const root = globals.fsRoot; //  'modules/MyHomeAutomation/';
   try {
     var contentType = getMimeType(path);
-    var data = fs.load(root + path);
+    var data = fs.load(path);
 
     try {
       data = (_readOnlyError("data"), decodeURIComponent(escape(data)));
@@ -5512,53 +5555,117 @@ var sendFile = function sendFile(path) {
   }
 };
 
-var addRoute = function addRoute(route, handler, scope) {
-  var obj = {
-    pattern: new RegExp('^' + route.replace(/:\w+/g, '([\\s\\S]+)') + '$'),
-    callback: scope ? handler.bind(scope) : handler
-  };
-  routes.push(obj);
+var createListener = function createListener(baseName, handler) {
+  global[baseName] = handler;
+  ws.allowExternalAccess(baseName, controller.auth.ROLE.ANONYMOUS); // login required
 };
+
+var destroyListener = function destroyListener(baseName) {
+  global[baseName] = undefined;
+  ws.revokeExternalAccess(baseName);
+};
+
+var WebServer =
+/*#__PURE__*/
+function () {
+  function WebServer(baseName) {
+    _classCallCheck(this, WebServer);
+
+    auto_bind__WEBPACK_IMPORTED_MODULE_1___default()(this);
+    this.baseName = baseName;
+    this.routes = [];
+    createListener(this.baseName, this._mainHandler);
+  }
+
+  _createClass(WebServer, [{
+    key: "addRoute",
+    value: function addRoute(route, handler) {
+      var routeObject = {
+        route: route,
+        pattern: new RegExp('^' + route.replace(/:\w+/g, '([\\s\\S]+)') + '$'),
+        // callback: scope ? handler.bind(scope) : handler
+        handler: handler
+      };
+      this.routes.push(routeObject);
+    } // обработчик всех запросов, пришедших на this.baseName
+
+  }, {
+    key: "_mainHandler",
+    value: function _mainHandler(url, request) {
+      var result = {
+        status: 404
+      };
+
+      lodash_forEachRight__WEBPACK_IMPORTED_MODULE_0___default()(this.routes, function (route) {
+        var args = url.match(route.pattern);
+
+        if (args) {
+          result = route.callback(args.slice(1));
+          return false;
+        }
+      });
+
+      return result;
+    }
+  }, {
+    key: "destroy",
+    value: function destroy() {
+      destroyListener(this.baseName);
+      this.routes = [];
+    }
+  }]);
+
+  return WebServer;
+}();
+
+
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./../node_modules/webpack/buildin/global.js */ "./node_modules/webpack/buildin/global.js")))
+
+/***/ }),
+
+/***/ "./src/index.js":
+/*!**********************!*\
+  !*** ./src/index.js ***!
+  \**********************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+;
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var lodash_map__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! lodash/map */ "./node_modules/lodash/map.js");
+/* harmony import */ var lodash_map__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(lodash_map__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _WebServer__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./WebServer */ "./src/WebServer.js");
+
+
+var webServer;
 
 var rootHandler = function rootHandler() {
-  return sendFile('htdocs/index.html');
+  return Object(_WebServer__WEBPACK_IMPORTED_MODULE_1__["sendFile"])('htdocs/index.html');
 };
 
-var initRoutes = function initRoutes() {
-  // index
-  addRoute('', rootHandler);
-  addRoute('/', rootHandler);
-  addRoute('/index.html', rootHandler);
+var start = function start() {
+  console.log('ZWayConsole module.js start');
+
+  var a = lodash_map__WEBPACK_IMPORTED_MODULE_0___default()([1, 2], function (val) {
+    return val + 1;
+  });
+
+  console.log("ZWayConsole module.js ".concat(a.join(',')));
+  webServer = new _WebServer__WEBPACK_IMPORTED_MODULE_1__["default"]('zwayconsole');
+  webServer.addRoute('', rootHandler);
+  webServer.addRoute('/', rootHandler);
+  webServer.addRoute('/index.html', rootHandler);
 };
 
-var startServer = function startServer() {
-  global.zwayconsole = function listen(url, request) {
-    // console.log('ZWayConsole request: ' + url);
-    var result = {
-      status: 404
-    };
-
-    lodash_forEachRight__WEBPACK_IMPORTED_MODULE_0___default()(routes, function (route) {
-      var args = url.match(route.pattern);
-
-      if (args) {
-        result = route.callback(args.slice(1));
-        return false;
-      }
-    });
-
-    return result;
-  };
-
-  ws.allowExternalAccess("zwayconsole", controller.auth.ROLE.ANONYMOUS); // login required
-
-  initRoutes();
+var stop = function stop() {
+  console.log('ZWayConsole module.js stop');
+  webServer.destroy();
 };
-var stopServer = function stopServer() {
-  ws.revokeExternalAccess("zwayconsole");
-  global.zwayconsole = null;
-};
-/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./../node_modules/webpack/buildin/global.js */ "./node_modules/webpack/buildin/global.js")))
+
+setTimeout(start, 1);
+/* harmony default export */ __webpack_exports__["default"] = ({
+  stop: stop
+});
 
 /***/ })
 
