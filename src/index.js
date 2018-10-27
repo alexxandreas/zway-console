@@ -1,3 +1,6 @@
+// Полифил для es5
+import '@babel/polyfill';
+
 import _ from 'lodash';
 
 import WebServer, { sendFile } from './WebServer';

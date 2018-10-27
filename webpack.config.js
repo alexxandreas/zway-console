@@ -60,7 +60,18 @@ const server = {
                     loader: 'babel-loader',
                     options: {
                         plugins: ['lodash'],
-                        presets: ['@babel/preset-env']
+                        // presets: ['@babel/preset-env']
+                        presets: [
+                            [
+                                "@babel/preset-env",
+                                {
+                                    "targets": {
+				                        "browsers": ["node 0.10.0", "ie >= 6"]
+			                        },
+                                    "useBuiltIns": "usage"
+                                 }
+                            ]
+                        ]
                     }
                 }]
             },
