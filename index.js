@@ -36,9 +36,9 @@ _module = ZWayConsole;
 
  ZWayConsole.prototype.start = function start() {
  	var console = {
- 		log: this.log.bind(this, 'log'),
- 		warn: this.log.bind(this, 'warn'),
- 		error: this.log.bind(this, 'error')
+ 		log: this.log.bind(this, 'log', this.name),
+ 		warn: this.log.bind(this, 'warn', this.name),
+ 		error: this.log.bind(this, 'error', this.name)
  	}
  	
  	console.log('start');
@@ -64,13 +64,13 @@ _module = ZWayConsole;
  	
  };
  
-ZWayConsole.prototype.log = function log(method, data) {
+ZWayConsole.prototype.log = function log(method, name, data) {
 	if (!data) {
- 		console[method].call(this, this.name + ' ' + data)
+ 		console[method].call(this, name + ' ' + data)
  		return;
  	}
  	data.split('\n').forEach(function(line) {
- 		console[method].call(this, this.name + ' ' + line);
+ 		console[method].call(this, name + ' ' + line);
  	})
 }
 

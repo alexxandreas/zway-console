@@ -674,7 +674,7 @@ export default class WebServer {
         _.forEachRight(this.routes, route => {
             const args = url.match(route.pattern);
             if( args ){
-                result = route.callback(args.slice(1));
+                result = route.handler(args.slice(1));
                 return false;
            }
         })
