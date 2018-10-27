@@ -1,5 +1,5 @@
- /* global fs, ws, controller */
-import _ from 'lodash';
+ /* global _ fs ws controller */
+// import _ from 'lodash';
 import autoBind from 'auto-bind';
  
 const mimeTypes = {
@@ -649,6 +649,7 @@ const destroyListener = baseName => {
 
 export default class WebServer {
     constructor(baseName) {
+        console.log(`Starting WebServer at '${baseName}'`);
         autoBind(this);
         this.baseName = baseName;
         this.routes = [];
@@ -663,7 +664,7 @@ export default class WebServer {
             // callback: scope ? handler.bind(scope) : handler
             handler
         } 
-        this.routes.push(routeObject);
+        this.routes.unshift(routeObject);
     }
     
     // обработчик всех запросов, пришедших на this.baseName
@@ -671,7 +672,7 @@ export default class WebServer {
         
         let result = { status: 404 };
         
-        _.forEachRight(this.routes, route => {
+        _.each(this.routes, route => {
             const args = url.match(route.pattern);
             if( args ){
                 result = route.handler(args.slice(1));
@@ -685,6 +686,7 @@ export default class WebServer {
     destroy() {
         destroyListener(this.baseName);
         this.routes = [];
+        console.log(`WebServer at '${this.baseName}' stopped`);
     }
 }	
  
