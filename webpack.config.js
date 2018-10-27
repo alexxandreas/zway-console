@@ -92,11 +92,12 @@ const client = {
     //     children: false
     // },
     entry: {
-        main: `${__dirname}/src/client/index.js`
+        app: `${__dirname}/src/client/index.js`
     },
     output: {
         path: `${__dirname}/htdocs`,
-        filename: 'app.js'
+        // filename: 'app.js'
+        filename: '[name].js'
         // libraryTarget: 'commonjs'
     },
     resolve: {

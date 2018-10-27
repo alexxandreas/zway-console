@@ -4570,4 +4570,4 @@ module.exports = function (module) {
 /***/ })
 
 }]);
-//# sourceMappingURL=vendor.app.js.map
+//# sourceMappingURL=vendor.js.map
