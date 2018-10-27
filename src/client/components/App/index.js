@@ -16,13 +16,13 @@ const printResult = data => {
 }
 
 const commandPassThrough = (cmd, print) => {
-    var command = cmd.join('');
+    var command = cmd.join(' ');
     try {
         var result = eval(command);
         console.warn(result);
         print(printResult(result));
     } catch (err) {
-        print(err.stack());
+        print(err.stack);
     }
 };
 
