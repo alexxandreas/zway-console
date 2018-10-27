@@ -1,0 +1,17 @@
+.terminal-container {
+  height: 100%;
+}
+
+.terminal-base {
+  width: 100%;
+}
+
+.terminal-main-input {
+    outline: none;
+    border: 1px solid;
+    width: calc(100% - 4px);
+}
+
+body {
+  margin: 0;
+}

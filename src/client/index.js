@@ -1,5 +1,8 @@
-import _ from 'lodash';
+// import _ from 'lodash';
+import React, { Component } from 'react';
+import { render } from 'react-dom';
 
-const a = _.map([1,2], v => v+1);
+import App from './components/App';
 
-console.dir(a);
+
+render(<App />, document.getElementById('content'));

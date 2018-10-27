@@ -125,8 +125,10 @@ const client = {
                     loader: 'babel-loader',
                     options: {
                         plugins: ['lodash'],
+                        // presets: ['es2015', 'react', 'stage-0']
                         // presets: ['@babel/preset-env']
                         presets: [
+                            "@babel/preset-react",
                             [
                                 "@babel/preset-env",
                                 {
@@ -136,7 +138,8 @@ const client = {
                                     // "useBuiltIns": "entry",
                                     // modules: false
                                  }
-                            ]
+                            ],
+                            
                         ]
                     }
                 }]
@@ -146,7 +149,8 @@ const client = {
     plugins: [
         // new RemoveStrictPlugin()
         new CopyWebpackPlugin([
-            { from: `${__dirname}/src/client/index.html`, to: 'index.html' }
+            { from: `${__dirname}/src/client/index.html`, to: 'index.html' },
+            { from: `${__dirname}/src/client/app.css`, to: 'app.css' }
         ])
     ],
     devtool: 'source-map'
