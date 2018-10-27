@@ -81,7 +81,7 @@
 /******/
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = "./src/index.js");
+/******/ 	return __webpack_require__(__webpack_require__.s = "./src/server/index.js");
 /******/ })
 /************************************************************************/
 /******/ ({
@@ -994,10 +994,10 @@ module.exports = g;
 
 /***/ }),
 
-/***/ "./src/WebServer.js":
-/*!**************************!*\
-  !*** ./src/WebServer.js ***!
-  \**************************/
+/***/ "./src/server/WebServer.js":
+/*!*********************************!*\
+  !*** ./src/server/WebServer.js ***!
+  \*********************************/
 /*! exports provided: sendError, sendJSON, sendFile, default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -1713,14 +1713,14 @@ function () {
 }();
 
 
-/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./../node_modules/webpack/buildin/global.js */ "./node_modules/webpack/buildin/global.js")))
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./../../node_modules/webpack/buildin/global.js */ "./node_modules/webpack/buildin/global.js")))
 
 /***/ }),
 
-/***/ "./src/index.js":
-/*!**********************!*\
-  !*** ./src/index.js ***!
-  \**********************/
+/***/ "./src/server/index.js":
+/*!*****************************!*\
+  !*** ./src/server/index.js ***!
+  \*****************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -1728,7 +1728,7 @@ function () {
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var core_js_modules_es6_object_assign__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! core-js/modules/es6.object.assign */ "./node_modules/core-js/modules/es6.object.assign.js");
 /* harmony import */ var core_js_modules_es6_object_assign__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_es6_object_assign__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _WebServer__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./WebServer */ "./src/WebServer.js");
+/* harmony import */ var _WebServer__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./WebServer */ "./src/server/WebServer.js");
 /* global globals */
 // Полифил для es5
 // import '@babel/polyfill';
@@ -1737,16 +1737,20 @@ __webpack_require__.r(__webpack_exports__);
 
 var webServer;
 
-var rootHandler = function rootHandler() {
-  return Object(_WebServer__WEBPACK_IMPORTED_MODULE_1__["sendFile"])(globals.fsRoot + 'htdocs/index.html');
-};
-
 var start = function start() {
   console.log('module.js start');
+
+  var rootHandler = function rootHandler() {
+    return Object(_WebServer__WEBPACK_IMPORTED_MODULE_1__["sendFile"])(globals.fsRoot + 'htdocs/index.html');
+  };
+
   webServer = new _WebServer__WEBPACK_IMPORTED_MODULE_1__["default"]('zwayconsole');
   webServer.addRoute('', rootHandler);
   webServer.addRoute('/', rootHandler);
   webServer.addRoute('/index.html', rootHandler);
+  webServer.addRoute('/htdocs/:path', function (args) {
+    return Object(_WebServer__WEBPACK_IMPORTED_MODULE_1__["sendFile"])(globals.fsRoot + 'htdocs/' + args[0]);
+  });
 };
 
 var stop = function stop() {

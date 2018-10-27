@@ -9,17 +9,20 @@ import WebServer, { sendFile } from './WebServer';
 
 let webServer;
 
-const rootHandler = () => sendFile(globals.fsRoot + 'htdocs/index.html');
+
 
 const start = () => {
     console.log('module.js start');
 
+    const rootHandler = () => sendFile(globals.fsRoot + 'htdocs/index.html');
     
     webServer = new WebServer('zwayconsole');
     
     webServer.addRoute('', rootHandler);
     webServer.addRoute('/', rootHandler);
     webServer.addRoute('/index.html', rootHandler);
+    
+    webServer.addRoute('/htdocs/:path', args => sendFile(globals.fsRoot + 'htdocs/' + args[0]));
 }
 
 const stop = () => {

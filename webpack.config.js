@@ -1,5 +1,5 @@
 const RemoveStrictPlugin = require( 'remove-strict-webpack-plugin' );
-
+const CopyWebpackPlugin = require('copy-webpack-plugin');
 
 // const distPath = PUBLISH ? 'dist' : 'dist-developement';
 // const clientOutputPath = `${__dirname}/${distPath}/client`;
@@ -28,7 +28,7 @@ const server = {
     //     children: false
     // },
     entry: {
-        main: `${__dirname}/src/index.js`
+        main: `${__dirname}/src/server/index.js`
     },
     output: {
         path: `${__dirname}`,
@@ -84,4 +84,71 @@ const server = {
     devtool: false
 };
 
-module.exports = server;
+const client = {
+    context: __dirname,
+    mode: 'development',
+    // stats: {
+    //     excludeAssets: /static\/.*/,
+    //     children: false
+    // },
+    entry: {
+        main: `${__dirname}/src/client/index.js`
+    },
+    output: {
+        path: `${__dirname}/htdocs`,
+        filename: 'app.js'
+        // libraryTarget: 'commonjs'
+    },
+    resolve: {
+        extensions: ['.js', '.jsx'],
+        modules: ['node_modules']
+    },
+    optimization: {
+        removeAvailableModules: true,
+        splitChunks: {
+            cacheGroups: {
+                vendor: {
+                    test: /[\\/]node_modules[\\/]/,
+                    name: 'vendor',
+                    chunks: 'all'
+                }
+            }
+        }
+    },
+    module: {
+        rules: [
+            {
+                test: /\.jsx?$/,
+                //exclude: /(node_modules|libs)/,
+                use: [{
+                    loader: 'babel-loader',
+                    options: {
+                        plugins: ['lodash'],
+                        // presets: ['@babel/preset-env']
+                        presets: [
+                            [
+                                "@babel/preset-env",
+                                {
+                        //             "targets": {
+				                    //     "browsers": ["node 0.10.0", "ie >= 6"]
+			                     //   },
+                                    // "useBuiltIns": "entry",
+                                    // modules: false
+                                 }
+                            ]
+                        ]
+                    }
+                }]
+            },
+        ] // rules
+    }, // modules
+    plugins: [
+        // new RemoveStrictPlugin()
+        new CopyWebpackPlugin([
+            { from: `${__dirname}/src/client/index.html`, to: 'index.html' }
+        ])
+    ],
+    devtool: 'source-map'
+};
+
+module.exports = [server, client];
