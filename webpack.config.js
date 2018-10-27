@@ -68,7 +68,8 @@ const server = {
                                     "targets": {
 				                        "browsers": ["node 0.10.0", "ie >= 6"]
 			                        },
-                                    "useBuiltIns": "entry"
+                                    // "useBuiltIns": "entry",
+                                    // modules: false
                                  }
                             ]
                         ]

@@ -1,7 +1,9 @@
 /* global globals */
 
 // Полифил для es5
-import '@babel/polyfill';
+// import '@babel/polyfill';
+// import 'core-js/object/assign';
+import 'core-js/modules/es6.object.assign';
 
 import WebServer, { sendFile } from './WebServer';
 
