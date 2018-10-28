@@ -101,7 +101,7 @@ const client = {
         // libraryTarget: 'commonjs'
     },
     resolve: {
-        extensions: ['.js', '.jsx'],
+        extensions: ['.js', '.jsx', '.css'],
         modules: ['node_modules']
     },
     optimization: {
@@ -144,12 +144,26 @@ const client = {
                     }
                 }]
             },
+            {
+                test: /\.css$/,
+                use: [
+                    {
+                        loader: 'css-loader', // translates CSS into CommonJS
+                        options: {
+                            modules: true,
+                            importLoaders: 1,
+                            localIdentName: '[path]__[local]___[hash:base64:5]'
+                        }
+                    }
+                ]
+            },
         ] // rules
     }, // modules
     plugins: [
         // new RemoveStrictPlugin()
         new CopyWebpackPlugin([
             { from: `${__dirname}/src/client/index.html`, to: 'index.html' },
+            { from: `${__dirname}/src/client/indexTest.html`, to: 'indexTest.html' },
             { from: `${__dirname}/src/client/app.css`, to: 'app.css' }
         ])
     ],

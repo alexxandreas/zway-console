@@ -994,6 +994,43 @@ module.exports = g;
 
 /***/ }),
 
+/***/ "./src/helpers/json.js":
+/*!*****************************!*\
+  !*** ./src/helpers/json.js ***!
+  \*****************************/
+/*! exports provided: stringify */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+;
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "stringify", function() { return stringify; });
+var stringify = function stringify(obj, replacer, spaces) {
+  return JSON.stringify(obj, serializer(replacer), spaces); //function serializer(replacer, cycleReplacer) {
+
+  function serializer(replacer) {
+    var stack = [],
+        keys = []; //if (cycleReplacer == null) cycleReplacer = function(key, value) {
+
+    var cycleReplacer = function cycleReplacer(key, value) {
+      if (stack[0] === value) return "[Circular ~]";
+      return "[Circular ~." + keys.slice(0, stack.indexOf(value)).join(".") + "]";
+    };
+
+    return function (key, value) {
+      if (stack.length > 0) {
+        var thisPos = stack.indexOf(this);
+        ~thisPos ? stack.splice(thisPos + 1) : stack.push(this);
+        ~thisPos ? keys.splice(thisPos, Infinity, key) : keys.push(key);
+        if (~stack.indexOf(value)) value = cycleReplacer.call(this, key, value);
+      } else stack.push(value);
+
+      return replacer == null ? value : replacer.call(this, key, value);
+    };
+  }
+};
+
+/***/ }),
+
 /***/ "./src/server/WebServer.js":
 /*!*********************************!*\
   !*** ./src/server/WebServer.js ***!
@@ -1729,10 +1766,14 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var core_js_modules_es6_object_assign__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! core-js/modules/es6.object.assign */ "./node_modules/core-js/modules/es6.object.assign.js");
 /* harmony import */ var core_js_modules_es6_object_assign__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_es6_object_assign__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _WebServer__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./WebServer */ "./src/server/WebServer.js");
+/* harmony import */ var _helpers_json__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../helpers/json */ "./src/helpers/json.js");
+var _this = undefined;
+
 /* global globals */
 // Полифил для es5
 // import '@babel/polyfill';
 // import 'core-js/object/assign';
+
 
 
 var webServer;
@@ -1751,6 +1792,23 @@ var start = function start() {
   webServer.addRoute('/htdocs/:path', function (args) {
     return Object(_WebServer__WEBPACK_IMPORTED_MODULE_1__["sendFile"])(globals.fsRoot + 'htdocs/' + args[0]);
   });
+  webServer.addRoute('/api/eval/:code', function (args) {
+    var code = args[0];
+    code = decodeURIComponent(code);
+
+    try {
+      var result = eval(code);
+      if (result === undefined) result = 'undefined';
+      result = Object(_helpers_json__WEBPACK_IMPORTED_MODULE_2__["stringify"])(result);
+      return Object(_WebServer__WEBPACK_IMPORTED_MODULE_1__["sendJSON"])(result);
+    } catch (err) {
+      var errObj = {
+        text: err.toString(),
+        stack: err.stack.replace('\\n', '\n')
+      };
+      return Object(_WebServer__WEBPACK_IMPORTED_MODULE_1__["sendError"])(500, errObj);
+    }
+  }, _this);
 };
 
 var stop = function stop() {
