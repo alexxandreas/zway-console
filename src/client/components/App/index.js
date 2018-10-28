@@ -39,7 +39,7 @@ const run = command => new Promise((resolve, reject) => {
     var encoded = encodeURIComponent(command);
     return axios({
         method: 'GET',
-        url: '/api/eval/' + encoded,
+        url: 'api/eval/' + encoded,
         // params: options.params,
         // data: options.data
     }).then(function(response) {

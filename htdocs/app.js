@@ -260,7 +260,7 @@ var run = function run(command) {
     var encoded = encodeURIComponent(command);
     return axios__WEBPACK_IMPORTED_MODULE_4___default()({
       method: 'GET',
-      url: '/api/eval/' + encoded // params: options.params,
+      url: 'api/eval/' + encoded // params: options.params,
       // data: options.data
 
     }).then(function (response) {
