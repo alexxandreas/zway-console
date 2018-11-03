@@ -38,12 +38,15 @@ const start = () => {
             return sendJSON(result);
         }
         catch (err) {
-            var errObj = {
-                text: err.toString(),
-                stack: err.stack.replace('\\n', '\n')
-            };
+            // var errObj = {
+            //     text: err.toString(),
+            //     stack: err.stack.replace('\\n', '\n')
+            // };
+            // return sendError(500, errObj);
+            
+            const stack = err.stack.replace('\\n', '\n');
 
-            return sendError(500, errObj);
+            return sendJSON(stack);
         }
     }, this);
 }

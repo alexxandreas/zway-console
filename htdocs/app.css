@@ -42,6 +42,14 @@ body {
   border-right: 5px solid rgba(0, 0, 0, 0.5);
 }
 
+.Pane {
+  display: flex;
+}
+
+.Pane1 > li {
+  overflow: auto;
+}
+
 .Pane > * {
   width: 100%;
   height: 100%;

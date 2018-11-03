@@ -1,0 +1,10 @@
+/*import imageM from './preloaderM.svg';*/
+
+.root {
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: contain; 
+    width: 24px;
+    height: 24px;
+    background-image: url(./preloaderM.svg);
+}

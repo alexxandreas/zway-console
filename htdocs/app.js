@@ -154,6 +154,50 @@
 /************************************************************************/
 /******/ ({
 
+/***/ "./node_modules/css-loader/index.js?!./src/client/components/App/styles.css":
+/*!**********************************************************************************!*\
+  !*** ./node_modules/css-loader??ref--5-1!./src/client/components/App/styles.css ***!
+  \**********************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-loader/lib/css-base.js */ "./node_modules/css-loader/lib/css-base.js")(false);
+// imports
+
+
+// module
+exports.push([module.i, ".src-client-components-App-__inspector___2n4Xx {\n  width: 100%;\n}\n\n.src-client-components-App-__preloader___3NCzO {\n    position: absolute;\n    right: 10px;\n    top: 10px;\n    z-index: 10;\n}", ""]);
+
+// exports
+exports.locals = {
+	"inspector": "src-client-components-App-__inspector___2n4Xx",
+	"preloader": "src-client-components-App-__preloader___3NCzO"
+};
+
+/***/ }),
+
+/***/ "./node_modules/css-loader/index.js?!./src/client/components/Preloader/styles.css":
+/*!****************************************************************************************!*\
+  !*** ./node_modules/css-loader??ref--5-1!./src/client/components/Preloader/styles.css ***!
+  \****************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+var escape = __webpack_require__(/*! ../../../../node_modules/css-loader/lib/url/escape.js */ "./node_modules/css-loader/lib/url/escape.js");
+exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-loader/lib/css-base.js */ "./node_modules/css-loader/lib/css-base.js")(false);
+// imports
+
+
+// module
+exports.push([module.i, "/*import imageM from './preloaderM.svg';*/\n\n.src-client-components-Preloader-__root___1TPxE {\n    background-repeat: no-repeat;\n    background-position: center;\n    background-size: contain; \n    width: 24px;\n    height: 24px;\n    background-image: url(" + escape(__webpack_require__(/*! ./preloaderM.svg */ "./src/client/components/Preloader/preloaderM.svg")) + ");\n}\n", ""]);
+
+// exports
+exports.locals = {
+	"root": "src-client-components-Preloader-__root___1TPxE"
+};
+
+/***/ }),
+
 /***/ "./src/client/components/App/index.js":
 /*!********************************************!*\
   !*** ./src/client/components/App/index.js ***!
@@ -186,6 +230,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var brace_theme_monokai__WEBPACK_IMPORTED_MODULE_10___default = /*#__PURE__*/__webpack_require__.n(brace_theme_monokai__WEBPACK_IMPORTED_MODULE_10__);
 /* harmony import */ var _styles__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./styles */ "./src/client/components/App/styles.css");
 /* harmony import */ var _styles__WEBPACK_IMPORTED_MODULE_11___default = /*#__PURE__*/__webpack_require__.n(_styles__WEBPACK_IMPORTED_MODULE_11__);
+/* harmony import */ var _Preloader__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ../Preloader */ "./src/client/components/Preloader/index.js");
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; var ownKeys = Object.keys(source); if (typeof Object.getOwnPropertySymbols === 'function') { ownKeys = ownKeys.concat(Object.getOwnPropertySymbols(source).filter(function (sym) { return Object.getOwnPropertyDescriptor(source, sym).enumerable; })); } ownKeys.forEach(function (key) { _defineProperty(target, key, source[key]); }); } return target; }
@@ -213,6 +258,7 @@ function _assertThisInitialized(self) { if (self === void 0) { throw new Referen
 
 
  // import Terminal from 'terminal-in-react';
+
 
 
 
@@ -304,7 +350,9 @@ function (_Component) {
     auto_bind__WEBPACK_IMPORTED_MODULE_3___default()(_assertThisInitialized(_assertThisInitialized(_this)));
     _this.state = {
       output: undefined,
-      input: ''
+      input: '',
+      editorHeight: null,
+      editorWidth: null
     };
     return _this;
   }
@@ -323,36 +371,66 @@ function (_Component) {
     value: function runCommand() {
       var _this2 = this;
 
-      var input = this.state.input; // this.showPrelader();
+      var input = this.state.input;
+      this.setState(function (state) {
+        return _objectSpread({}, state, {
+          showPrelader: true
+        });
+      }); // this.showPrelader();
 
       run(input).then(function (result) {
         // this.hidePreloader();
         _this2.setState(function (state) {
           return _objectSpread({}, state, {
-            output: result
+            output: result,
+            showPrelader: false
           });
+        });
+      });
+    }
+  }, {
+    key: "onSplitPaneDragFinished",
+    value: function onSplitPaneDragFinished() {
+      var _this3 = this;
+
+      var a = this.aceWrapper;
+      this.setState(function (state) {
+        return _objectSpread({}, state, {
+          editorHeight: "".concat(_this3.aceWrapper.clientHeight, "px"),
+          editorWidth: "".concat(_this3.aceWrapper.clientWidth, "px")
         });
       });
     }
   }, {
     key: "render",
     value: function render() {
+      var _this4 = this;
+
       var _this$state = this.state,
           input = _this$state.input,
-          output = _this$state.output;
-      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_split_pane__WEBPACK_IMPORTED_MODULE_2__["default"], {
-        split: "horizontal"
+          output = _this$state.output,
+          editorHeight = _this$state.editorHeight,
+          editorWidth = _this$state.editorWidth,
+          showPrelader = _this$state.showPrelader;
+      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_split_pane__WEBPACK_IMPORTED_MODULE_2__["default"], {
+        split: "horizontal",
+        onDragFinished: this.onSplitPaneDragFinished,
+        defaultSize: "70%"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_inspector__WEBPACK_IMPORTED_MODULE_5___default.a, {
         theme: "chromeDark",
         data: output,
         nodeRenderer: inspectorNodeRenderer
-      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_ace__WEBPACK_IMPORTED_MODULE_7___default.a, {
+      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        ref: function ref(element) {
+          return _this4.aceWrapper = element;
+        }
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_ace__WEBPACK_IMPORTED_MODULE_7___default.a, {
         mode: "javascript",
         theme: "monokai",
         onChange: this.onInputChange,
         name: "UNIQUE_ID_OF_DIV",
-        width: "100%",
-        height: "100%",
+        width: editorWidth || '100%',
+        height: editorHeight || '100%',
         value: input,
         commands: [{
           // commands is array of key bindings.
@@ -366,6 +444,8 @@ function (_Component) {
           exec: this.runCommand //function to execute when keys are pressed.
 
         }]
+      }))), showPrelader && react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Preloader__WEBPACK_IMPORTED_MODULE_12__["default"], {
+        className: _styles__WEBPACK_IMPORTED_MODULE_11___default.a.preloader
       }));
     }
   }]);
@@ -384,17 +464,139 @@ function (_Component) {
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-loader/lib/css-base.js */ "./node_modules/css-loader/lib/css-base.js")(false);
-// imports
+
+var content = __webpack_require__(/*! !../../../../node_modules/css-loader??ref--5-1!./styles.css */ "./node_modules/css-loader/index.js?!./src/client/components/App/styles.css");
+
+if(typeof content === 'string') content = [[module.i, content, '']];
+
+var transform;
+var insertInto;
 
 
-// module
-exports.push([module.i, ".src-client-components-App-__inspector___2n4Xx {\n  width: 100%;\n}", ""]);
 
-// exports
-exports.locals = {
-	"inspector": "src-client-components-App-__inspector___2n4Xx"
-};
+var options = {"hmr":true}
+
+options.transform = transform
+options.insertInto = undefined;
+
+var update = __webpack_require__(/*! ../../../../node_modules/style-loader/lib/addStyles.js */ "./node_modules/style-loader/lib/addStyles.js")(content, options);
+
+if(content.locals) module.exports = content.locals;
+
+if(false) {}
+
+/***/ }),
+
+/***/ "./src/client/components/Preloader/index.js":
+/*!**************************************************!*\
+  !*** ./src/client/components/Preloader/index.js ***!
+  \**************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _styles__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./styles */ "./src/client/components/Preloader/styles.css");
+/* harmony import */ var _styles__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_styles__WEBPACK_IMPORTED_MODULE_1__);
+function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function _extends() { _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; return _extends.apply(this, arguments); }
+
+function _objectWithoutProperties(source, excluded) { if (source == null) return {}; var target = _objectWithoutPropertiesLoose(source, excluded); var key, i; if (Object.getOwnPropertySymbols) { var sourceSymbolKeys = Object.getOwnPropertySymbols(source); for (i = 0; i < sourceSymbolKeys.length; i++) { key = sourceSymbolKeys[i]; if (excluded.indexOf(key) >= 0) continue; if (!Object.prototype.propertyIsEnumerable.call(source, key)) continue; target[key] = source[key]; } } return target; }
+
+function _objectWithoutPropertiesLoose(source, excluded) { if (source == null) return {}; var target = {}; var sourceKeys = Object.keys(source); var key, i; for (i = 0; i < sourceKeys.length; i++) { key = sourceKeys[i]; if (excluded.indexOf(key) >= 0) continue; target[key] = source[key]; } return target; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+
+
+
+var Preloader =
+/*#__PURE__*/
+function (_Component) {
+  _inherits(Preloader, _Component);
+
+  function Preloader() {
+    _classCallCheck(this, Preloader);
+
+    return _possibleConstructorReturn(this, _getPrototypeOf(Preloader).apply(this, arguments));
+  }
+
+  _createClass(Preloader, [{
+    key: "render",
+    value: function render() {
+      var _this$props = this.props,
+          className = _this$props.className,
+          props = _objectWithoutProperties(_this$props, ["className"]);
+
+      var rootClass = "".concat(className || '', " ").concat(_styles__WEBPACK_IMPORTED_MODULE_1___default.a.root);
+      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", _extends({
+        className: rootClass
+      }, props));
+    }
+  }]);
+
+  return Preloader;
+}(react__WEBPACK_IMPORTED_MODULE_0__["Component"]);
+
+/* harmony default export */ __webpack_exports__["default"] = (Preloader);
+
+/***/ }),
+
+/***/ "./src/client/components/Preloader/preloaderM.svg":
+/*!********************************************************!*\
+  !*** ./src/client/components/Preloader/preloaderM.svg ***!
+  \********************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = "\"data:image/svg+xml,%3C?xml version='1.0' encoding='UTF-8' standalone='no'?%3E%3Csvg xmlns:svg='http://www.w3.org/2000/svg' xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' version='1.0' width='32px' height='32px' viewBox='0 0 128 128' xml:space='preserve'%3E%3Cg%3E%3ClinearGradient id='linear-gradient'%3E%3Cstop offset='0%25' stop-color='%23ffffff' fill-opacity='0'/%3E%3Cstop offset='100%25' stop-color='%23000000' fill-opacity='1'/%3E%3C/linearGradient%3E%3Cpath d='M63.85 0A63.85 63.85 0 1 1 0 63.85 63.85 63.85 0 0 1 63.85 0zm.65 19.5a44 44 0 1 1-44 44 44 44 0 0 1 44-44z' fill='url(%23linear-gradient)' fill-rule='evenodd'/%3E%3CanimateTransform attributeName='transform' type='rotate' from='0 64 64' to='360 64 64' dur='1080ms' repeatCount='indefinite'%3E%3C/animateTransform%3E%3C/g%3E%3C/svg%3E\""
+
+/***/ }),
+
+/***/ "./src/client/components/Preloader/styles.css":
+/*!****************************************************!*\
+  !*** ./src/client/components/Preloader/styles.css ***!
+  \****************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+
+var content = __webpack_require__(/*! !../../../../node_modules/css-loader??ref--5-1!./styles.css */ "./node_modules/css-loader/index.js?!./src/client/components/Preloader/styles.css");
+
+if(typeof content === 'string') content = [[module.i, content, '']];
+
+var transform;
+var insertInto;
+
+
+
+var options = {"hmr":true}
+
+options.transform = transform
+options.insertInto = undefined;
+
+var update = __webpack_require__(/*! ../../../../node_modules/style-loader/lib/addStyles.js */ "./node_modules/style-loader/lib/addStyles.js")(content, options);
+
+if(content.locals) module.exports = content.locals;
+
+if(false) {}
 
 /***/ }),
 

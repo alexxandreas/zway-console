@@ -1802,11 +1802,13 @@ var start = function start() {
       result = Object(_helpers_json__WEBPACK_IMPORTED_MODULE_2__["stringify"])(result);
       return Object(_WebServer__WEBPACK_IMPORTED_MODULE_1__["sendJSON"])(result);
     } catch (err) {
-      var errObj = {
-        text: err.toString(),
-        stack: err.stack.replace('\\n', '\n')
-      };
-      return Object(_WebServer__WEBPACK_IMPORTED_MODULE_1__["sendError"])(500, errObj);
+      // var errObj = {
+      //     text: err.toString(),
+      //     stack: err.stack.replace('\\n', '\n')
+      // };
+      // return sendError(500, errObj);
+      var stack = err.stack.replace('\\n', '\n');
+      return Object(_WebServer__WEBPACK_IMPORTED_MODULE_1__["sendJSON"])(stack);
     }
   }, _this);
 };

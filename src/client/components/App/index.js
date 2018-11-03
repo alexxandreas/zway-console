@@ -17,6 +17,7 @@ import 'brace/mode/javascript';
 import 'brace/theme/monokai';
 
 import styles from './styles'; 
+import Preloader from '../Preloader';
 
 
 const inspectorNodeRenderer = ({ depth, name, data, isNonenumerable, expanded }, { theme }) => {
@@ -82,7 +83,9 @@ class App extends Component {
         autoBind(this);
         this.state = {
             output: undefined,
-            input: ''
+            input: '',
+            editorHeight: null,
+            editorWidth: null
         }
     }
     
@@ -92,33 +95,52 @@ class App extends Component {
     
     runCommand() {
         const { input } = this.state;
+        this.setState(state => ({...state, showPrelader: true}));
         // this.showPrelader();
         run(input).then(result => {
             // this.hidePreloader();
-            this.setState(state => ({...state, output: result}));
+            this.setState(state => ({...state, output: result, showPrelader: false}));
         })
     }
     
+    onSplitPaneDragFinished() {
+        var a = this.aceWrapper;
+        this.setState(state => ({ 
+            ...state, 
+            editorHeight: `${this.aceWrapper.clientHeight}px`,
+            editorWidth: `${this.aceWrapper.clientWidth}px`
+        }));
+    }
+    
     render() {
-        const { input, output } = this.state;
+        const { input, output, editorHeight, editorWidth, showPrelader } = this.state;
         return (
-            <SplitPane split="horizontal"  >
+            <div>
+            
+            <SplitPane 
+                split="horizontal" onDragFinished={this.onSplitPaneDragFinished} 
+                defaultSize='70%' 
+            >
                 <Inspector theme='chromeDark' data={output} nodeRenderer={inspectorNodeRenderer}/>
-                <AceEditor
-                    mode="javascript"
-                    theme="monokai"
-                    onChange={this.onInputChange}
-                    name="UNIQUE_ID_OF_DIV"
-                    width='100%'
-                    height='100%'
-                    value={input}
-                    commands={[{   // commands is array of key bindings.
-                        name: 'run', //name for the key binding.
-                        bindKey: {win: 'Ctrl-Enter', mac: 'Command-Enter'}, //key combination used for the command.
-                        exec: this.runCommand  //function to execute when keys are pressed.
-                    }]}
-                  />
+                <div ref={(element)=>this.aceWrapper=element}>
+                    <AceEditor
+                        mode="javascript"
+                        theme="monokai"
+                        onChange={this.onInputChange}
+                        name="UNIQUE_ID_OF_DIV"
+                        width={editorWidth || '100%'}
+                        height={editorHeight || '100%'}
+                        value={input}
+                        commands={[{   // commands is array of key bindings.
+                            name: 'run', //name for the key binding.
+                            bindKey: {win: 'Ctrl-Enter', mac: 'Command-Enter'}, //key combination used for the command.
+                            exec: this.runCommand  //function to execute when keys are pressed.
+                        }]}
+                      />
+                </div>
             </SplitPane>
+            { showPrelader && <Preloader className={styles.preloader}/>}
+            </div>
         );
     }
 }

@@ -148,6 +148,9 @@ const client = {
                 test: /\.css$/,
                 use: [
                     {
+                        loader: 'style-loader'
+                    },
+                    {
                         loader: 'css-loader', // translates CSS into CommonJS
                         options: {
                             modules: true,
@@ -157,6 +160,14 @@ const client = {
                     }
                 ]
             },
+            {
+                test: /\.svg/,
+                exclude: /(node_modules|libs)/,
+                use: {
+                    loader: 'svg-url-loader',
+                    options: {}
+                }
+            }
         ] // rules
     }, // modules
     plugins: [
